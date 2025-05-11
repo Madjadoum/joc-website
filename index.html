@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeunesse Ouvrière Chrétienne</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+            background-image: url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        header {
+            background: #27ae60; /* Vert JOC */
+            color: #fff; /* Blanc */
+            padding: 1rem 0;
+            text-align: center;
+        }
+        nav {
+            background: #219653; /* Vert légèrement plus foncé */
+            padding: 1rem;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.9); /* Fond blanc semi-transparent pour lisibilité */
+            border-radius: 10px;
+        }
+        .hero {
+            background: #f0f9f4; /* Vert pâle */
+            padding: 2rem;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .events, .contact, .admin {
+            margin: 2rem 0;
+        }
+        .events h2, .contact h2, .admin h2 {
+            color: #27ae60;
+        }
+        .event-card {
+            border: 1px solid #ddd;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+            position: relative;
+            background: #fff;
+        }
+        .event-card button {
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+        .event-card button:hover {
+            background: #c0392b;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 500px;
+        }
+        input, textarea {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background: #27ae60; /* Vert JOC */
+            color: #fff;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #219653; /* Vert plus foncé au survol */
+        }
+        .admin-login, .admin-panel {
+            display: none;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .admin-panel form {
+            margin-bottom: 2rem;
+        }
+        footer {
+            background: #27ae60;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Jeunesse Ouvrière Chrétienne</h1>
+        <p>Agir ensemble pour un monde plus juste</p>
+    </header>
+    <nav>
+        <a href="#accueil">Accueil</a>
+        <a href="#a-propos">À propos</a>
+        <a href="#evenements">Événements</a>
+        <a href="#contact">Contact</a>
+        <a href="#admin" id="admin-link">Administration</a>
+    </nav>
+    <div class="container">
+        <section id="accueil" class="hero">
+            <h2>Bienvenue à la JOC</h2>
+            <p>La Jeunesse Ouvrière Chrétienne est un mouvement de jeunes travailleurs qui s'engagent pour défendre leurs droits, promouvoir la justice sociale et vivre leur foi au quotidien.</p>
+        </section>
+        <section id="a-propos">
+            <h2>À propos de nous</h2>
+            <p>La JOC réunit des jeunes de 15 à 30 ans, issus du monde ouvrier, pour réfléchir, s'organiser et agir ensemble. Nous croyons en la dignité de chaque personne et en la force de l'action collective.</p>
+        </section>
+        <section id="evenements" class="events">
+            <h2>Nos événements</h2>
+            <div id="event-list"></div>
+        </section>
+        <section id="contact" class="contact">
+            <h2>Contactez-nous</h2>
+            <form id="contact-form">
+                <input type="text" placeholder="Votre nom" required>
+                <input type="email" placeholder="Votre email" required>
+                <textarea placeholder="Votre message" rows="5" required></textarea>
+                <button type="submit">Envoyer</button>
+            </form>
+        </section>
+        <section id="admin" class="admin">
+            <div class="admin-login">
+                <h2>Connexion administrateur</h2>
+                <form id="admin-login-form">
+                    <input type="password" id="admin-password" placeholder="Mot de passe" required>
+                    <button type="submit">Se connecter</button>
+                </form>
+            </div>
+            <div class="admin-panel">
+                <h2>Gestion des événements</h2>
+                <form id="event-form">
+                    <input type="text" id="event-title" placeholder="Titre de l'événement" required>
+                    <input type="text" id="event-date" placeholder="Date (ex: 15 juin 2025)" required>
+                    <input type="text" id="event-location" placeholder="Lieu" required>
+                    <textarea id="event-description" placeholder="Description" rows="5" required></textarea>
+                    <button type="submit">Ajouter l'événement</button>
+                </form>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <p>© 2025 Jeunesse Ouvrière Chrétienne. Tous droits réservés.</p>
+    </footer>
+    <script>
+        // Données initiales des événements
+        const initialEvents = [
+            {
+                title: "Rassemblement national",
+                date: "15 juin 2025",
+                location: "Paris",
+                description: "Rejoignez-nous pour un moment de partage, de réflexion et d'action collective !"
+            },
+            {
+                title: "Atelier sur la justice sociale",
+                date: "20 juillet 2025",
+                location: "Lyon",
+                description: "Un atelier pour discuter des enjeux actuels et proposer des solutions concrètes."
+            }
+        ];
+
+        // Charger les événements depuis localStorage ou utiliser les événements initiaux
+        let events = JSON.parse(localStorage.getItem('events')) || initialEvents;
+        let isAdmin = false;
+
+        // Afficher les événements
+        function renderEvents() {
+            const eventList = document.getElementById('event-list');
+            eventList.innerHTML = '';
+            events.forEach((event, index) => {
+                const eventCard = document.createElement('div');
+                eventCard.className = 'event-card';
+                eventCard.innerHTML = `
+                    <h3>${event.title}</h3>
+                    <p>Date : ${event.date}</p>
+                    <p>Lieu : ${event.location}</p>
+                    <p>${event.description}</p>
+                    ${isAdmin ? `<button onclick="deleteEvent(${index})">Supprimer</button>` : ''}
+                `;
+                eventList.appendChild(eventCard);
+            });
+            localStorage.setItem('events', JSON.stringify(events));
+        }
+
+        // Supprimer un événement
+        function deleteEvent(index) {
+            if (confirm('Voulez-vous vraiment supprimer cet événement ?')) {
+                events.splice(index, 1);
+                renderEvents();
+            }
+        }
+
+        // Gestion du formulaire de contact
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Message envoyé ! Nous vous répondrons bientôt.');
+            this.reset();
+        });
+
+        // Gestion de la connexion admin
+        document.getElementById('admin-login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('admin-password').value;
+            alert('Mot de passe saisi : ' + password); // Débogage
+            if (password === 'joc2025') {
+                isAdmin = true;
+                document.querySelector('.admin-login').style.display = 'none';
+                document.querySelector('.admin-panel').style.display = 'block';
+                renderEvents();
+            } else {
+                alert('Mot de passe incorrect');
+            }
+        });
+
+        // Gestion de l'ajout d'événements
+        document.getElementById('event-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const newEvent = {
+                title: document.getElementById('event-title').value,
+                date: document.getElementById('event-date').value,
+                location: document.getElementById('event-location').value,
+                description: document.getElementById('event-description').value
+            };
+            events.push(newEvent);
+            renderEvents();
+            this.reset();
+            alert('Événement ajouté avec succès !');
+        });
+
+        // Afficher la section admin au clic sur le lien
+        document.getElementById('admin-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('.admin').style.display = 'block';
+            document.querySelector('.admin-login').style.display = isAdmin ? 'none' : 'block';
+            document.querySelector('.admin-panel').style.display = isAdmin ? 'block' : 'none';
+        });
+
+        // Initialiser l'affichage des événements
+        renderEvents();
+    </script>
+</body>
+</html> ajout de l'index.html
